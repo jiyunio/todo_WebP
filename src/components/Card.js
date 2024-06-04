@@ -1,59 +1,90 @@
-import React, {useState} from 'react';
-import EditTask from '../modals/EditTask'
+import React, { useState } from "react";
+import EditTask from "../modals/EditTask";
+import Checkbox from "@mui/material/Checkbox";
 
-const Card = ({taskObj, index, deleteTask, updateListArray}) => {
-    const [modal, setModal] = useState(false);
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-    const colors = [
-        {
-            primaryColor : "#5D93E1",
-            secondaryColor : "#ECF3FC"
-        },
-        {
-            primaryColor : "#F9D288",
-            secondaryColor : "#FEFAF1"
-        },
-        {
-            primaryColor : "#5DC250",
-            secondaryColor : "#F2FAF1"
-        },
-        {
-            primaryColor : "#F48687",
-            secondaryColor : "#FDF1F1"
-        },
-        {
-            primaryColor : "#B964F7",
-            secondaryColor : "#F3F0FD"
-        }
-    ]
+const Card = ({ taskObj, index, deleteTask, updateListArray }) => {
+  const [modal, setModal] = useState(false);
 
-    const toggle = () => {
-        setModal(!modal);
-    }
+  const colors = [
+    {
+      primaryColor: "#5D93E1",
+      secondaryColor: "#ECF3FC",
+    },
+    {
+      primaryColor: "#F9D288",
+      secondaryColor: "#FEFAF1",
+    },
+    {
+      primaryColor: "#5DC250",
+      secondaryColor: "#F2FAF1",
+    },
+    {
+      primaryColor: "#F48687",
+      secondaryColor: "#FDF1F1",
+    },
+    {
+      primaryColor: "#B964F7",
+      secondaryColor: "#F3F0FD",
+    },
+  ];
 
-    const updateTask = (obj) => {
-        updateListArray(obj, index)
-    }
+  const toggle = () => {
+    setModal(!modal);
+  };
 
-    const handleDelete = () => {
-        deleteTask(index)
-    }
+  const updateTask = (obj) => {
+    updateListArray(obj, index);
+  };
 
-    return (
-        <div class = "card-wrapper mr-5">
-            <div class = "card-top" style={{"background-color": colors[index%5].primaryColor}}></div>
-            <div class = "task-holder">
-                <span class = "card-header" style={{"background-color": colors[index%5].secondaryColor, "border-radius": "10px"}}>{taskObj.Name}</span>
-                <p className = "mt-3">{taskObj.Description}</p>
+  const handleDelete = () => {
+    deleteTask(index);
+  };
 
-                <div style={{"position": "absolute", "top":"160px", "left":"160px"}}>
-                    <button style={{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {() => setModal(true)}>close</button>
-                    <button style = {{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {handleDelete}>Delete</button>
-                </div>
+  return (
+    <div class="card-wrapper mr-5">
+      <div
+        class="card-top"
+        style={{ "background-color": colors[index % 5].primaryColor }}
+      ></div>
+      <div class="task-holder">
+        <span
+          class="card-header"
+          style={{
+            "background-color": colors[index % 5].secondaryColor,
+            "border-radius": "10px",
+          }}
+        >
+          {taskObj.Name}
+        </span>
+        <div className="todoContent">
+          <p className="taskDescription">{taskObj.Description}</p>
+          <Checkbox {...label} className="checkbox" />
         </div>
-        <EditTask modal = {modal} toggle = {toggle} updateTask = {updateTask} taskObj = {taskObj}/>
+        <div style={{ position: "absolute", top: "160px", left: "160px" }}>
+          <button
+            style={{ color: colors[index % 5].primaryColor, cursor: "pointer" }}
+            onClick={() => setModal(true)}
+          >
+            close
+          </button>
+          <button
+            style={{ color: colors[index % 5].primaryColor, cursor: "pointer" }}
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
         </div>
-    );
+      </div>
+      <EditTask
+        modal={modal}
+        toggle={toggle}
+        updateTask={updateTask}
+        taskObj={taskObj}
+      />
+    </div>
+  );
 };
 
 export default Card;
